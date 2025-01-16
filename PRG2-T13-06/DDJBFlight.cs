@@ -15,9 +15,14 @@ namespace PRG2_T13_06
             RequestFee = requestFee;
         }
 
-        public double CalculateFees()
+        public override double CalculateFees()
         {
-            return RequestFee = 600;
+            RequestFee = 300;
+            {
+                if (Origin == "Singapore") { return RequestFee + 800; }
+                else if (Destination == "Singapore") { return RequestFee + 500; }
+                else { return RequestFee; }
+            }
         }
 
         public override string ToString()
