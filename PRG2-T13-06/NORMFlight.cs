@@ -12,9 +12,11 @@ namespace PRG2_T13_06
         public NORMFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
         { }
 
-        public double CalculateFees()
+        public override double CalculateFees()
         {
-            return 300;
+            if (Origin == "Singapore") { double fees = 800; return fees; }
+            else if (Destination == "Singapore") { double fees = 500; return fees; }
+            else { return 0; }
         }
 
         public override string ToString()
