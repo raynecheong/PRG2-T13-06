@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRG2_T13_06
 {
-    internal class Flight
+    internal abstract class Flight
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
@@ -23,10 +23,7 @@ namespace PRG2_T13_06
             Status = status;
         }
 
-        public double CalculateFees()
-        {
-            return 0;
-        }
+        public abstract double CalculateFees();
         public override string ToString()
         {
             return $"Flight Number{FlightNumber}, Origin: {Origin}, Destination: {Destination}, Date and Time: {ExpectedTime}, Status: {Status}";
