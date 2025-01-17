@@ -84,6 +84,53 @@ namespace PRG2_T13_06
             }
         }
 
+        static void DisplayAirlineFlights(Dictionary<string, Airline> airlines, Dictionary<string, Flight> flights)
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine($"{"Airline Code",-15} {"Airline Name"}");
+            foreach (var airline in airlines.Values)
+            {
+                Console.WriteLine($"{airline.Code,-15} {airline.Name}");
+            }
+
+            Console.Write("Enter Airline Code: ");
+            string airlineCode = Console.ReadLine()?.ToUpper();
+            if (!airlines.ContainsKey(airlineCode))
+            {
+                Console.WriteLine("Invalid Airline Code. Please try again");
+                return;
+            }
+
+            var airlineName = airlines[airlineCode].Name;
+            List<Flight> airlineFlights = new List<Flight>();
+            foreach (var flight in flights.Values)
+            {
+                if (flight.FlightNumber.StartsWith(airlineCode))
+                {
+                    airlineFlights.Add(flight);
+                }
+            }
+
+            if (airlineFlights.Count == 0)
+            {
+                Console.WriteLine($"No flights found for {airlineName}.");
+                return;
+            }
+
+            Console.WriteLine("=============================================");
+            Console.WriteLine($"List of Flights for {airlineName}");
+            Console.WriteLine("=============================================");
+            Console.WriteLine($"{"Flight Number",-15} {"Airline Name",-25} {"Origin",-25} {"Destination",-25} {"Expected"}");
+            Console.WriteLine("Departure/Arrival Time");
+
+            foreach (var flight in airlineFlights)
+            {
+                Console.WriteLine($"{flight.FlightNumber,-15} {airlineName,-25} {flight.Origin,-25} {flight.Destination,-25} {flight.ExpectedTime}");
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Loading Airlines...");
