@@ -15,18 +15,16 @@ namespace PRG2_T13_06
             RequestFee = requestFee;
         }
 
-        public override double CalculateFees()
+        public virtual double CalculateFees()
         {
-            double totalFee = 600;
+            double totalFee = 150;
             if (Destination == "Singapore (SIN)") { totalFee += 500; }
             if (Origin == "Singapore (SIN)") { totalFee += 800; }
 
             double discount = 0;
             if (ExpectedTime.TimeOfDay < DateTime.Parse("11:00 am").TimeOfDay) { discount += 110; }
             if (ExpectedTime.TimeOfDay < DateTime.Parse("9:00 pm").TimeOfDay) { discount += 110; }
-            if (Origin == "Dubai (DXB)") { discount += 25; }
-            if (Origin == "Bangkok (BKK)") { discount += 25; }
-            if (Origin == "Tokyo (NRT)") { discount += 25; }
+            if (Origin == "Dubai (DXB)" || Origin == "Bangkok (BKK)" || Origin == "Tokyo (NRT)") { discount += 25; }
 
             return totalFee - discount;
         }
