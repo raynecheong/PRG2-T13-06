@@ -23,7 +23,10 @@ namespace PRG2_T13_06
             Status = status;
         }
 
-        public abstract double CalculateFees();
+        public double CalculateFees()
+        {
+            return 0;
+        }
         public override string ToString()
         {
             return $"Flight Number{FlightNumber}, Origin: {Origin}, Destination: {Destination}, Date and Time: {ExpectedTime}, Status: {Status}";

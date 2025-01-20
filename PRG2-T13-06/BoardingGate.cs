@@ -25,7 +25,10 @@ namespace PRG2_T13_06
 
         public double CalculateFees()
         {
-            return 300;
+            if (Flight is CFFTFlight && SupportsCFFT) { return Flight.CalculateFees() + 300; }
+            else if (Flight is DDJBFlight && SupportsDDJB) { return Flight.CalculateFees() + 300; }
+            else if (Flight is LWTTFlight && SupportsLWTT) { return Flight.CalculateFees() + 300; }
+            else { return 0.0;  }
         }
         public override string ToString()
         {
