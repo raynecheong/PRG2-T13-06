@@ -115,7 +115,7 @@ namespace PRG2_T13_06
                 else if (status == "DDJB")
                 {
                     DDJBFlight DDJB = new DDJBFlight(flightNum, origin, destination, espectedTime, status, 0);
-                    double requestFee = DDJB.CalculateFees();
+                    double requestFee = DDJB.CalculateFees();   
                     DDJB.RequestFee = requestFee;
                     flights.Add(flightNum, DDJB);
                 }
@@ -127,15 +127,30 @@ namespace PRG2_T13_06
             return flights;
         }
 
-        static void DisplayFlights(Dictionary<string, Flight> flights)
+        static void DisplayFlights(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
         {
             Console.WriteLine("=============================================");
             Console.WriteLine("List of Flights for Changi Airport Terminal 5");
             Console.WriteLine("=============================================");
-            Console.WriteLine($"{"Flight Number",-16}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
+            Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
             foreach (KeyValuePair<string, Flight> kvp in flights)
             {
-                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+                string airlineName = "";
+                foreach (KeyValuePair<string, Airline> air in airline)
+                {
+                    string flightNum = kvp.Value.FlightNumber;
+                    string flightNumCode = flightNum.Split(' ')[0];
+                    if (air.Key == flightNumCode)
+                    {
+                        airlineName = air.Value.Name;
+                        break;
+                    }
+                    else
+                    {
+                        airlineName = "Unknown";
+                    }
+                }
+                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
         }
 
@@ -159,7 +174,7 @@ namespace PRG2_T13_06
                 DisplayMenu();
                 string input = Console.ReadLine();
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
-                if (input == "1") { DisplayFlights(flights); }
+                if (input == "1") { DisplayFlights(flights, airlines); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
                 if (input == "5") { ; }
             }
