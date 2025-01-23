@@ -15,7 +15,7 @@ namespace PRG2_T13_06
             RequestFee = requestFee;
         }
 
-        public virtual double CalculateFees()
+        public override double CalculateFees()
         {
             double totalFee = 300;
             if (Destination == "Singapore (SIN)") { totalFee += 500; }

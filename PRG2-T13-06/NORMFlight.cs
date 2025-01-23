@@ -12,7 +12,7 @@ namespace PRG2_T13_06
         public NORMFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
         { }
 
-        public virtual double CalculateFees()
+        public override double CalculateFees()
         {
             double totalFee = 300;
             if (Destination == "Singapore (SIN)") { totalFee += 500; }
