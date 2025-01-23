@@ -23,7 +23,7 @@ namespace PRG2_T13_06
             Status = status;
         }
 
-        public double CalculateFees()
+        public virtual double CalculateFees()
         {
             return 0;
         }
