@@ -14,9 +14,16 @@ namespace PRG2_T13_06
 
         public override double CalculateFees()
         {
-            if (Origin == "Singapore") { double fees = 800; return fees; }
-            else if (Destination == "Singapore") { double fees = 500; return fees; }
-            else { return 0; }
+            double totalFee = 300;
+            if (Destination == "Singapore (SIN)") { totalFee += 500; }
+            if (Origin == "Singapore (SIN)") { totalFee += 800; }
+
+            double discount = 50;
+            if (ExpectedTime.TimeOfDay < DateTime.Parse("11:00 am").TimeOfDay) { discount += 110; }
+            if (ExpectedTime.TimeOfDay < DateTime.Parse("9:00 pm").TimeOfDay) { discount += 110; }
+            if (Origin == "Dubai (DXB)" || Origin == "Bangkok (BKK)" || Origin == "Tokyo (NRT)") { discount += 25; }
+
+            return totalFee - discount;
         }
 
         public override string ToString()
