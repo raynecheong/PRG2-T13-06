@@ -84,6 +84,78 @@ namespace PRG2_T13_06
             }
         }
 
+        static  Dictionary<string, Flight> LoadFlights(string filePath)
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] info = lines[i].Split(',');
+                string flightNum = info[0];
+                string origin = info[1];
+                string destination = info[2];
+                DateTime espectedTime = DateTime.Parse(info[3]);
+                string status = info[4];
+
+                if (status == "CFFT")
+                {
+                    CFFTFlight CFFT = new CFFTFlight(flightNum, origin, destination, espectedTime, status, 0);
+                    double requestFee = CFFT.CalculateFees();
+                    CFFT.RequestFee = requestFee;
+                    flights.Add(flightNum, CFFT);
+                }
+                else if (status == "LWTT")
+                {
+                    LWTTFlight LWTT = new LWTTFlight(flightNum, origin, destination, espectedTime, status, 0);
+                    double requestFee = LWTT.CalculateFees();
+                    LWTT.RequestFee = requestFee;
+                    flights.Add(flightNum, LWTT);
+                }
+                else if (status == "DDJB")
+                {
+                    DDJBFlight DDJB = new DDJBFlight(flightNum, origin, destination, espectedTime, status, 0);
+                    double requestFee = DDJB.CalculateFees();   
+                    DDJB.RequestFee = requestFee;
+                    flights.Add(flightNum, DDJB);
+                }
+                else
+                {
+                    flights.Add(flightNum, new NORMFlight(flightNum, origin, destination, espectedTime, status));
+                }
+            }
+            return flights;
+        }
+
+        static void DisplayFlights(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
+            foreach (KeyValuePair<string, Flight> kvp in flights)
+            {
+                string airlineName = "";
+                foreach (KeyValuePair<string, Airline> air in airline)
+                {
+                    string flightNum = kvp.Value.FlightNumber;
+                    string flightNumCode = flightNum.Split(' ')[0];
+                    if (air.Key == flightNumCode)
+                    {
+                        airlineName = air.Value.Name;
+                        break;
+                    }
+                    else
+                    {
+                        airlineName = "Unknown";
+                    }
+                }
+                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+            }
+        }
+
+
+
         static void DisplayAirlineFlights(Dictionary<string, Airline> airlines, Dictionary<string, Flight> flights)
         {
             Console.WriteLine("=============================================");
@@ -141,12 +213,16 @@ namespace PRG2_T13_06
             var boardingGates = LoadBoardingGates("boardinggates.csv");
             Console.WriteLine($"{boardingGates.Count} Boarding Gates Loaded!");
 
+            Console.WriteLine("Loading Flights...");
+            var flights = LoadFlights("flights.csv");
+            Console.WriteLine($"{flights.Count} Flights Loaded!");
+
             while (true)
             {
                 DisplayMenu();
                 string input = Console.ReadLine();
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
-                if (input == "1") {; }
+                if (input == "1") { DisplayFlights(flights, airlines); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
                 if (input == "5") { ; }
             }
