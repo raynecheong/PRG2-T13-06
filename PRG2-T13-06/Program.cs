@@ -83,7 +83,7 @@ namespace PRG2_T13_06
                 Console.WriteLine($"{gate.GateName,-10} {gate.SupportsDDJB,-10} {gate.SupportsCFFT,-10} {gate.SupportsLWTT,-10}");
             }
         }
-
+        //QN 2 (DONE)
         static  Dictionary<string, Flight> LoadFlights(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -126,7 +126,7 @@ namespace PRG2_T13_06
             }
             return flights;
         }
-
+        //QN 3 (DONE)
         static void DisplayFlights(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
         {
             Console.WriteLine("=============================================");
@@ -153,6 +153,8 @@ namespace PRG2_T13_06
                 Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
         }
+
+        
 
 
         static void Main(string[] args)
