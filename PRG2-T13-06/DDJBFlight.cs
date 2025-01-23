@@ -29,6 +29,8 @@ namespace PRG2_T13_06
             return totalFee - discount;
         }
 
+
+
         public override string ToString()
         {
             return base.ToString() + $", Fee: {RequestFee}";
