@@ -15,7 +15,7 @@ namespace PRG2_T13_06
             Console.WriteLine("5. Display Airline Flights");
             Console.WriteLine("6. Modify Flight Details");
             Console.WriteLine("7. Display Flight Schedule");
-            Console.WriteLine("0. Exit");
+            Console.WriteLine("0. Exit\n");
             Console.Write("Please select your option: ");
         }
 
@@ -205,6 +205,29 @@ namespace PRG2_T13_06
             }
         }
 
+        static void AssignGateToFlight(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline )
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Assign a Boarding Gate to a Flight");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Enter Flight Number:");
+            string flightNum = Console.ReadLine();
+            Console.WriteLine("Enter Boarding Gate Name:");
+            string gate = Console.ReadLine();
+            if (flights.ContainsKey(flightNum))
+            {
+                var value = flights[flightNum];
+                Console.WriteLine($"Flight Number: {value.FlightNumber}");
+                Console.WriteLine($"Origin: {value.Origin}");
+                Console.WriteLine($"Destination: {value.Destination}");
+                Console.WriteLine($"Expected Time: {value.ExpectedTime}");
+                Console.WriteLine($"Special Request Code: {value.Status}");
+            }
+
+            
+
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Loading Airlines...");
@@ -226,6 +249,7 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") { DisplayFlights(flights, airlines); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
+                if (input == "3") { AssignGateToFlight(flights, airlines); }
                 if (input == "5") { ; }
             }
         }
