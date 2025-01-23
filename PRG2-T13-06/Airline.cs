@@ -37,7 +37,13 @@ namespace PRG2_T13_06
             {
                 totalFees += flight.CalculateFees();
             }
-            return totalFees;
+
+            int totalFlight = Flights.Count;
+            int discount = totalFlight / 3;
+            double totalDiscount = discount * 350;
+
+            if (totalFlight > 5) { totalDiscount += totalFees * 0.03; }
+            return totalFees - totalDiscount;
         }
 
         public override string ToString()
