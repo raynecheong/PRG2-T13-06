@@ -148,7 +148,7 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") {; }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
-                if (input == "5") { ; }
+                if (input == "5") { DisplayAirlines(airlines); }
             }
         }
     }
