@@ -27,9 +27,8 @@ namespace PRG2_T13_06
             if (Origin == "Dubai (DXB)" || Origin == "Bangkok (BKK)" || Origin == "Tokyo (NRT)") { discount += 25; }
 
             return totalFee - discount;
+
         }
-
-
 
         public override string ToString()
         {
