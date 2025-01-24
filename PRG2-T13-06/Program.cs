@@ -1,4 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿//==========================================================
+// Student Number: S10267916E
+// Student Name: Rayne Cheong Yun Hao
+// Partner Name: Chin Wei Hong
+//==========================================================
+// See https://aka.ms/new-console-template for more information
 namespace PRG2_T13_06
 {
     internal class Program
