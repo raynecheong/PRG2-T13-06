@@ -240,7 +240,7 @@ namespace PRG2_T13_06
                 DisplayMenu();
                 string input = Console.ReadLine();
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
-                if (input == "1") { DisplayFlights(flights, airlines); }
+                if (input == "1") { DisplayFlights(flights); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
 
                 if (input == "3") { AssignGateToFlight(flights, airlines); }
