@@ -1,4 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿//==========================================================
+// Student Number: S10267916E
+// Student Name: Rayne Cheong Yun Hao
+// Partner Name: Chin Wei Hong
+//==========================================================
+// See https://aka.ms/new-console-template for more information
 namespace PRG2_T13_06
 
 {
@@ -237,8 +242,12 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") { DisplayFlights(flights, airlines); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
+
                 if (input == "3") { AssignGateToFlight(flights, airlines); }
-                if (input == "5") { ; }
+
+
+                if (input == "5") { DisplayAirlines(airlines); }
+
             }
         }
     }
