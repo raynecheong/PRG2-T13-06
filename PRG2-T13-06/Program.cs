@@ -39,6 +39,7 @@ namespace PRG2_T13_06
 
                 Airline airline = new Airline(name, code);
                 airlines[code] = airline;
+                terminal.AddAirline(airline);
             }
 
             return airlines;
@@ -142,7 +143,7 @@ namespace PRG2_T13_06
             Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
             foreach (KeyValuePair<string, Flight> kvp in flights)
             {
-                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{terminal.GetAirlineFromFlight(kvp.Value),-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{terminal.GetAirlineFromFlight(kvp.Value).Name,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
 
         }
@@ -240,7 +241,7 @@ namespace PRG2_T13_06
                 DisplayMenu();
                 string input = Console.ReadLine();
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
-                if (input == "1") { DisplayFlights(flights, airlines); }
+                if (input == "1") { DisplayFlights(flights); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
 
                 if (input == "3") { AssignGateToFlight(flights, airlines); }
