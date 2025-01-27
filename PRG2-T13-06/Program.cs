@@ -1,8 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace PRG2_T13_06
+
 {
     internal class Program
     {
+        static Terminal terminal = new Terminal("Terminal 5");
         static void DisplayMenu()
         {
             Console.WriteLine("\n=============================================");
@@ -135,26 +137,30 @@ namespace PRG2_T13_06
             Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
             foreach (KeyValuePair<string, Flight> kvp in flights)
             {
-                string airlineName = "";
-                foreach (KeyValuePair<string, Airline> air in airline)
-                {
-                    string flightNum = kvp.Value.FlightNumber;
-                    string flightNumCode = flightNum.Split(' ')[0];
-                    if (air.Key == flightNumCode)
-                    {
-                        airlineName = air.Value.Name;
-                        break;
-                    }
-                    else
-                    {
-                        airlineName = "Unknown";
-                    }
-                }
-                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{terminal.GetAirlineFromFlight(kvp.Value),-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
+            //    foreach (KeyValuePair<string, Flight> kvp in flights)
+            //    {
+            //        string airlineName = "";
+            //        foreach (KeyValuePair<string, Airline> air in airline)
+            //        {
+            //            string flightNum = kvp.Value.FlightNumber;
+            //            string flightNumCode = flightNum.Split(' ')[0];
+            //            if (air.Key == flightNumCode)
+            //            {
+            //                airlineName = air.Value.Name;
+            //                break;
+            //            }
+            //            else
+            //            {
+            //                airlineName = "Unknown";
+            //            }
+            //        }
+            //        Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+            //    }
         }
 
-        
+
 
 
 
