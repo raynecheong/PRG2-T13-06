@@ -129,7 +129,7 @@ namespace PRG2_T13_06
             return flights;
         }
         //QN 3 (DONE)
-        static void DisplayFlights(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
+        static void DisplayFlights(Dictionary<string, Flight> flights)
         {
             Console.WriteLine("=============================================");
             Console.WriteLine("List of Flights for Changi Airport Terminal 5");
@@ -139,25 +139,7 @@ namespace PRG2_T13_06
             {
                 Console.WriteLine($"{kvp.Value.FlightNumber,-16}{terminal.GetAirlineFromFlight(kvp.Value),-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
-            //    foreach (KeyValuePair<string, Flight> kvp in flights)
-            //    {
-            //        string airlineName = "";
-            //        foreach (KeyValuePair<string, Airline> air in airline)
-            //        {
-            //            string flightNum = kvp.Value.FlightNumber;
-            //            string flightNumCode = flightNum.Split(' ')[0];
-            //            if (air.Key == flightNumCode)
-            //            {
-            //                airlineName = air.Value.Name;
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                airlineName = "Unknown";
-            //            }
-            //        }
-            //        Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
-            //    }
+
         }
 
 
