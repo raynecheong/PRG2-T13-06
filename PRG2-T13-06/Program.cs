@@ -147,6 +147,24 @@ namespace PRG2_T13_06
 
         }
 
+        //QN 4
+
+
+        //QN 5 
+        static void CreateNewFlight()
+        {
+            Console.WriteLine("Enter Flight Number: ");
+            string flightNum = Console.ReadLine();
+            Console.WriteLine("Enter Origin: ");
+            string origin = Console.ReadLine();
+            Console.WriteLine("Enter Destination: ");
+            string destination = Console.ReadLine();
+            Console.WriteLine("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            DateTime dateTime = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+            string request = Console.ReadLine();
+        }
+
 
 
 
