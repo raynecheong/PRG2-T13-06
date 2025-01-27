@@ -53,15 +53,17 @@ namespace PRG2_T13_06
 
         public Airline GetAirlineFromFlight(Flight flight)
         {
-            foreach (var airline in Airlines.Values)
+            string airlinecode = flight.FlightNumber.Substring(0, 2);
+            try
             {
-                if (airline.Flights.ContainsKey(flight.FlightNumber))
-                {
-                    return airline;
-                }
+                return Airlines[airlinecode];
             }
-            return null;
+            catch (KeyNotFoundException)
+            {
+                Console.WriteLine("Airline not found!"); return null;
+            }
         }
+    
 
         public void PrintAirlineFees()
         {
