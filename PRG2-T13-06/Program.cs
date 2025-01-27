@@ -5,9 +5,11 @@
 //==========================================================
 // See https://aka.ms/new-console-template for more information
 namespace PRG2_T13_06
+
 {
     internal class Program
     {
+        static Terminal terminal = new Terminal("Terminal 5");
         static void DisplayMenu()
         {
             Console.WriteLine("\n=============================================");
@@ -20,7 +22,7 @@ namespace PRG2_T13_06
             Console.WriteLine("5. Display Airline Flights");
             Console.WriteLine("6. Modify Flight Details");
             Console.WriteLine("7. Display Flight Schedule");
-            Console.WriteLine("0. Exit");
+            Console.WriteLine("0. Exit\n");
             Console.Write("Please select your option: ");
         }
 
@@ -88,7 +90,7 @@ namespace PRG2_T13_06
                 Console.WriteLine($"{gate.GateName,-10} {gate.SupportsDDJB,-10} {gate.SupportsCFFT,-10} {gate.SupportsLWTT,-10}");
             }
         }
-
+        //QN 2 (DONE)
         static  Dictionary<string, Flight> LoadFlights(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -131,8 +133,8 @@ namespace PRG2_T13_06
             }
             return flights;
         }
-
-        static void DisplayFlights(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
+        //QN 3 (DONE)
+        static void DisplayFlights(Dictionary<string, Flight> flights)
         {
             Console.WriteLine("=============================================");
             Console.WriteLine("List of Flights for Changi Airport Terminal 5");
@@ -140,24 +142,12 @@ namespace PRG2_T13_06
             Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
             foreach (KeyValuePair<string, Flight> kvp in flights)
             {
-                string airlineName = "";
-                foreach (KeyValuePair<string, Airline> air in airline)
-                {
-                    string flightNum = kvp.Value.FlightNumber;
-                    string flightNumCode = flightNum.Split(' ')[0];
-                    if (air.Key == flightNumCode)
-                    {
-                        airlineName = air.Value.Name;
-                        break;
-                    }
-                    else
-                    {
-                        airlineName = "Unknown";
-                    }
-                }
-                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{airlineName,-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
+                Console.WriteLine($"{kvp.Value.FlightNumber,-16}{terminal.GetAirlineFromFlight(kvp.Value),-23}{kvp.Value.Origin,-23}{kvp.Value.Destination,-23}{kvp.Value.ExpectedTime}");
             }
+
         }
+
+
 
 
 
@@ -208,6 +198,29 @@ namespace PRG2_T13_06
             }
         }
 
+        static void AssignGateToFlight(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline )
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Assign a Boarding Gate to a Flight");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Enter Flight Number:");
+            string flightNum = Console.ReadLine();
+            Console.WriteLine("Enter Boarding Gate Name:");
+            string gate = Console.ReadLine();
+            if (flights.ContainsKey(flightNum))
+            {
+                var value = flights[flightNum];
+                Console.WriteLine($"Flight Number: {value.FlightNumber}");
+                Console.WriteLine($"Origin: {value.Origin}");
+                Console.WriteLine($"Destination: {value.Destination}");
+                Console.WriteLine($"Expected Time: {value.ExpectedTime}");
+                Console.WriteLine($"Special Request Code: {value.Status}");
+            }
+
+            
+
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Loading Airlines...");
@@ -229,7 +242,12 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") { DisplayFlights(flights, airlines); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
+
+                if (input == "3") { AssignGateToFlight(flights, airlines); }
+
+
                 if (input == "5") { DisplayAirlines(airlines); }
+
             }
         }
     }
