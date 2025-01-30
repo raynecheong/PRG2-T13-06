@@ -215,7 +215,6 @@ namespace PRG2_T13_06
             {
                 Console.WriteLine($"{airline.Code,-15} {airline.Name}");
             }
-
             Console.Write("Enter Airline Code: ");
             string airlineCode = Console.ReadLine()?.ToUpper();
             if (!airlines.ContainsKey(airlineCode))
@@ -223,7 +222,6 @@ namespace PRG2_T13_06
                 Console.WriteLine("Invalid Airline Code. Please try again");
                 return;
             }
-
             var airlineName = airlines[airlineCode].Name;
             List<Flight> airlineFlights = new List<Flight>();
             foreach (var flight in flights.Values)
@@ -233,7 +231,6 @@ namespace PRG2_T13_06
                     airlineFlights.Add(flight);
                 }
             }
-
             if (airlineFlights.Count == 0)
             {
                 Console.WriteLine($"No flights found for {airlineName}.");
@@ -252,8 +249,6 @@ namespace PRG2_T13_06
             }
         }
 
-
-        static Dictionary<string, string> AssignGateToFlight = new Dictionary<string, string>();
 
         static void AssignBoardingGate(Dictionary<string, Flight> flights, Dictionary<string, BoardingGate> boardingGates)
         {
@@ -284,27 +279,13 @@ namespace PRG2_T13_06
                 Console.WriteLine("Invalid Boarding Gate. Please try again.");
                 return;
             }
-
-            // Check if the boarding gate is already assigned to another flight
-            if (AssignGateToFlight.ContainsValue(gateName))
-            {
-                Console.WriteLine("Boarding Gate is already assigned to another flight.");
-                return;
-            }
-
-            // Assign the boarding gate to the flight
-            if (AssignGateToFlight.ContainsKey(flightNumber))
-            {
-                AssignGateToFlight[flightNumber] = gateName; // Update existing assignment
-            }
-            else
-            {
-                AssignGateToFlight.Add(flightNumber, gateName); // Add new assignment
-            }
-
+            var selectedGate = boardingGates[gateName];
+            Console.WriteLine($"Boarding Gate Name: {gateName}");
+            Console.WriteLine($"Supports DDJB: {selectedGate.SupportsDDJB}");
+            Console.WriteLine($"Supports CFFT: {selectedGate.SupportsCFFT}");
+            Console.WriteLine($"Supports LWTT: {selectedGate.SupportsLWTT}");
             Console.WriteLine("Would you like to update the status of the flight? (Y/N)");
             string updateStatus = Console.ReadLine()?.ToUpper();
-
             if (updateStatus == "Y")
             {
                 Console.WriteLine("1. Delayed");
@@ -355,10 +336,8 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") { DisplayFlights(flights); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
-
                 if (input == "3") { AssignBoardingGate(flights, boardingGates); }
                 if (input == "4") { CreateNewFlight(flights, airlines); }
-
                 if (input == "5") { DisplayAirlines(airlines); }
 
             }
