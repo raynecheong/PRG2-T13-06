@@ -4,6 +4,8 @@
 // Partner Name: Chin Wei Hong
 //==========================================================
 // See https://aka.ms/new-console-template for more information
+using System.Globalization;
+
 namespace PRG2_T13_06
 
 {
@@ -147,26 +149,116 @@ namespace PRG2_T13_06
 
         }
 
-        //QN 4
-
 
         //QN 5 
-        static void CreateNewFlight()
+        //static void CreateNewFlight(Dictionary<string, Flight> flights)
+        //{
+        //    Console.WriteLine("Enter Flight Number: ");
+        //    string flightNum = Console.ReadLine();
+        //    Console.WriteLine("Enter Origin: ");
+        //    string origin = Console.ReadLine();
+        //    Console.WriteLine("Enter Destination: ");
+        //    string destination = Console.ReadLine();
+        //    Console.WriteLine("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+        //    DateTime dateTime = DateTime.Parse(Console.ReadLine());
+        //    Console.WriteLine("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+        //    string request = Console.ReadLine();
+        //    if (request == "CFFT")
+        //    {
+        //        CFFTFlight CFFT = new CFFTFlight(flightNum, origin, destination, dateTime, request, 0);
+        //        double requestFee = CFFT.CalculateFees();
+        //        CFFT.RequestFee = requestFee;
+        //        flights.Add(flightNum, CFFT);
+        //    }
+        //    else if (request == "LWTT")
+        //    {
+        //        LWTTFlight LWTT = new LWTTFlight(flightNum, origin, destination, dateTime, request, 0);
+        //        double requestFee = LWTT.CalculateFees();
+        //        LWTT.RequestFee = requestFee;
+        //        flights.Add(flightNum, LWTT);
+        //    }
+        //    else if (request == "DDJB")
+        //    {
+        //        DDJBFlight DDJB = new DDJBFlight(flightNum, origin, destination, dateTime, request, 0);
+        //        double requestFee = DDJB.CalculateFees();
+        //        DDJB.RequestFee = requestFee;
+        //        flights.Add(flightNum, DDJB);
+        //    }
+        //    else
+        //    {
+        //        flights.Add(flightNum, new NORMFlight(flightNum, origin, destination, dateTime, request));
+        //    }
+        //}
+
+
+
+        static void CreateNewFlight(Dictionary<string, Flight> flights)
         {
-            Console.WriteLine("Enter Flight Number: ");
-            string flightNum = Console.ReadLine();
-            Console.WriteLine("Enter Origin: ");
+            Console.Write("Enter Flight Number: ");
+            string flightNum = Console.ReadLine().ToUpper();
+
+            // Check for duplicate flight number
+            if (flights.ContainsKey(flightNum))
+            {
+                Console.WriteLine("Error: Flight number already exists. Please enter a different flight.");
+                return;
+            }
+
+            Console.Write("Enter Origin: ");
             string origin = Console.ReadLine();
-            Console.WriteLine("Enter Destination: ");
+
+            Console.Write("Enter Destination: ");
             string destination = Console.ReadLine();
-            Console.WriteLine("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
-            DateTime dateTime = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
-            string request = Console.ReadLine();
-            
+
+            Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            string inputDateTime = Console.ReadLine();
+            if (!DateTime.TryParseExact(inputDateTime, "d/M/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
+            {
+                Console.WriteLine("Error: Invalid date format. Please use 'dd/mm/yyyy hh:mm'.");
+                return;
+            }
+
+            Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+            string request = Console.ReadLine().ToUpper();
+
+            List<string> validRequests = new List<string> { "CFFT", "DDJB", "LWTT", "NONE" };
+            if (!validRequests.Contains(request))
+            {
+                Console.WriteLine("Error: Invalid special request code. Please enter CFFT, DDJB, LWTT, or None.");
+                return;
+            }
+
+            Flight flight;
+            if (request == "CFFT")
+            {
+                flight = new CFFTFlight(flightNum, origin, destination, dateTime, request, 0);
+                ((CFFTFlight)flight).RequestFee = flight.CalculateFees();
+            }
+            else if (request == "DDJB")
+            {
+                flight = new DDJBFlight(flightNum, origin, destination, dateTime, request, 0);
+                ((DDJBFlight)flight).RequestFee = flight.CalculateFees();
+            }
+            else if (request == "LWTT")
+            {
+                flight = new LWTTFlight(flightNum, origin, destination, dateTime, request, 0);
+                ((LWTTFlight)flight).RequestFee = flight.CalculateFees();
+            }
+            else
+            {
+                flight = new NORMFlight(flightNum, origin, destination, dateTime, request);
+            }
+
+            flights.Add(flightNum, flight);
+            Console.WriteLine($"\nFlight {flightNum} has been added successfully!");
+
+            Console.Write("Would you like to add another flight? (Y/N): ");
+            string anotherFlight = Console.ReadLine().ToUpper();
+            if (anotherFlight == "Y")
+            {
+                CreateNewFlight(flights);
+            }
         }
-
-
 
 
 
@@ -217,6 +309,7 @@ namespace PRG2_T13_06
             }
         }
 
+        //QN 4
         static void AssignGateToFlight(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline )
         {
             Console.WriteLine("=============================================");
@@ -235,8 +328,6 @@ namespace PRG2_T13_06
                 Console.WriteLine($"Expected Time: {value.ExpectedTime}");
                 Console.WriteLine($"Special Request Code: {value.Status}");
             }
-
-            
 
         }
 
@@ -263,7 +354,7 @@ namespace PRG2_T13_06
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
 
                 if (input == "3") { AssignGateToFlight(flights, airlines); }
-
+                if (input == "4") { CreateNewFlight(flights); }
 
                 if (input == "5") { DisplayAirlines(airlines); }
 
