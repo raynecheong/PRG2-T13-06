@@ -377,7 +377,7 @@ namespace PRG2_T13_06
                 if (input == "1") { DisplayFlights(flights); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
                 if (input == "3") { ; }
-                if (input == "5") { DisplayAirlines(airlines); }
+                if (input == "5") { DisplayAirlines(airlines, flights); }
                 if (input == "6") { ModifyFlightDetails(airlines,flights); }
 
             }
