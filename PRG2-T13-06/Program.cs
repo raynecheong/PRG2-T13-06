@@ -504,7 +504,7 @@ namespace PRG2_T13_06
                 if (input == "3") { AssignBoardingGate(flights, boardingGates); }
                 if (input == "4") { CreateNewFlight(flights, airlines); }
 
-                if (input == "5") { DisplayAirlines(airlines, flights); }
+                if (input == "5") { DisplayAirlineFlights(airlines,flights); }
                 if (input == "6") { ModifyFlightDetails(airlines,flights); }
 
             }
