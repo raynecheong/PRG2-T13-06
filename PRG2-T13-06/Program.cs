@@ -172,7 +172,6 @@ namespace PRG2_T13_06
             string destination = Console.ReadLine();
             Console.Write("Enter Expected Departure/Arrival Time (dd/MM/yyyy HH:mm): ");
             DateTime expectedTime = DateTime.Parse(Console.ReadLine());
-
             Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
             string specialRequestCode = Console.ReadLine()?.ToUpper();
 
@@ -196,6 +195,12 @@ namespace PRG2_T13_06
 
             flights.Add(flightNumber, newFlight);
             Console.WriteLine($"Flight {flightNumber} has been added!");
+
+            Console.WriteLine(expectedTime.ToString("dd/MM/yyyy hh:mm tt"));
+            string flightCSVPath = "flights.csv";
+            string flightCSVLine = $"{flightNumber},{origin},{destination},{expectedTime:dd/MM/yyyy hh:mm:tt},{specialRequestCode}";
+            File.AppendAllText(flightCSVPath, flightCSVLine + "\r\n");
+
 
             Console.Write("Would you like to add another flight? (Y/N): ");
             string addAnother = Console.ReadLine()?.ToUpper();
