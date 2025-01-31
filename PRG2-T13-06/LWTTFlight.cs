@@ -27,8 +27,7 @@ namespace PRG2_T13_06
             if (Origin == "Singapore (SIN)") { totalFee += 800; }
 
             double discount = 0;
-            if (ExpectedTime.TimeOfDay < DateTime.Parse("11:00 am").TimeOfDay) { discount += 110; }
-            if (ExpectedTime.TimeOfDay < DateTime.Parse("9:00 pm").TimeOfDay) { discount += 110; }
+            if (ExpectedTime.TimeOfDay < DateTime.Parse("11:00 AM").TimeOfDay || ExpectedTime.TimeOfDay > DateTime.Parse("9:00 PM").TimeOfDay) { discount += 110; }
             if (Origin == "Dubai (DXB)" || Origin == "Bangkok (BKK)" || Origin == "Tokyo (NRT)") { discount += 25; }
 
             return totalFee - discount;
