@@ -94,10 +94,12 @@ namespace PRG2_T13_06
             }
         }
 
-        static  Dictionary<string, Flight> LoadFlights(string filePath)
+
+        static Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
+        static Dictionary<string, string> specialRequestCode = new Dictionary<string, string>();
+        static Dictionary<string, Flight> LoadFlights(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
-            Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 
             for (int i = 1; i < lines.Length; i++)
             {
@@ -106,32 +108,37 @@ namespace PRG2_T13_06
                 string origin = info[1];
                 string destination = info[2];
                 DateTime espectedTime = DateTime.Parse(info[3]);
-                string status = info[4];
+                string specialCode = info[4];
+                string status = "Scheduled";
 
-                if (status == "CFFT")
+                if (specialCode == "CFFT")
                 {
                     CFFTFlight CFFT = new CFFTFlight(flightNum, origin, destination, espectedTime, status, 0);
                     double requestFee = CFFT.CalculateFees();
                     CFFT.RequestFee = requestFee;
                     flights.Add(flightNum, CFFT);
+                    specialRequestCode.Add(flightNum, specialCode);
                 }
-                else if (status == "LWTT")
+                else if (specialCode == "LWTT")
                 {
                     LWTTFlight LWTT = new LWTTFlight(flightNum, origin, destination, espectedTime, status, 0);
                     double requestFee = LWTT.CalculateFees();
                     LWTT.RequestFee = requestFee;
                     flights.Add(flightNum, LWTT);
+                    specialRequestCode.Add(flightNum, specialCode);
                 }
-                else if (status == "DDJB")
+                else if (specialCode == "DDJB")
                 {
                     DDJBFlight DDJB = new DDJBFlight(flightNum, origin, destination, espectedTime, status, 0);
                     double requestFee = DDJB.CalculateFees();   
                     DDJB.RequestFee = requestFee;
                     flights.Add(flightNum, DDJB);
+                    specialRequestCode.Add(flightNum, specialCode);
                 }
                 else
                 {
                     flights.Add(flightNum, new NORMFlight(flightNum, origin, destination, espectedTime, status));
+                    specialRequestCode.Add(flightNum, "None");
                 }
             }
             return flights;
@@ -173,34 +180,48 @@ namespace PRG2_T13_06
             Console.Write("Enter Expected Departure/Arrival Time (dd/MM/yyyy HH:mm): ");
             DateTime expectedTime = DateTime.Parse(Console.ReadLine());
             Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
-            string specialRequestCode = Console.ReadLine()?.ToUpper();
+            string specialCode = Console.ReadLine()?.ToUpper();
 
             Flight newFlight;
-            if (specialRequestCode == "CFFT")
+            if (specialCode == "CFFT")
             {
-                newFlight = new CFFTFlight(flightNumber, origin, destination, expectedTime, "CFFT", 0);
+                newFlight = new CFFTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 0);
+                flights.Add(flightNumber, newFlight);
+                specialRequestCode.Add(flightNumber, specialCode);
             }
-            else if (specialRequestCode == "DDJB")
+            else if (specialCode == "DDJB")
             {
-                newFlight = new DDJBFlight(flightNumber, origin, destination, expectedTime, "DDJB", 0);
+                newFlight = new DDJBFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 0);
+                flights.Add(flightNumber, newFlight);
+                specialRequestCode.Add(flightNumber, specialCode);
             }
-            else if (specialRequestCode == "LWTT")
+            else if (specialCode == "LWTT")
             {
-                newFlight = new LWTTFlight(flightNumber, origin, destination, expectedTime, "LWTT", 0);
+                newFlight = new LWTTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 0);
+                flights.Add(flightNumber, newFlight);
+                specialRequestCode.Add(flightNumber, specialCode);
             }
             else
             {
-                newFlight = new NORMFlight(flightNumber, origin, destination, expectedTime, "On Time");
+                newFlight = new NORMFlight(flightNumber, origin, destination, expectedTime, "Scheduled");
+                flights.Add(flightNumber, newFlight);
+                specialRequestCode.Add(flightNumber, specialCode);
             }
 
-            flights.Add(flightNumber, newFlight);
             Console.WriteLine($"Flight {flightNumber} has been added!");
 
-            Console.WriteLine(expectedTime.ToString("dd/MM/yyyy hh:mm tt"));
-            string flightCSVPath = "flights.csv";
-            string flightCSVLine = $"{flightNumber},{origin},{destination},{expectedTime:dd/MM/yyyy hh:mm:tt},{specialRequestCode}";
-            File.AppendAllText(flightCSVPath, flightCSVLine + "\r\n");
-
+            if (specialCode == "None")
+            {
+                string flightCSVPath = "flights.csv";
+                string flightCSVLine = $"{flightNumber},{origin},{destination},{expectedTime:dd/MM/yyyy hh:mm:tt},{null}";
+                File.AppendAllText(flightCSVPath, flightCSVLine + "\r\n");
+            }
+            else
+            {
+                string flightCSVPath = "flights.csv";
+                string flightCSVLine = $"{flightNumber},{origin},{destination},{expectedTime:dd/MM/yyyy hh:mm:tt},{specialCode}";
+                File.AppendAllText(flightCSVPath, flightCSVLine + "\r\n");
+            }
 
             Console.Write("Would you like to add another flight? (Y/N): ");
             string addAnother = Console.ReadLine()?.ToUpper();
@@ -505,10 +526,8 @@ namespace PRG2_T13_06
                 if (input == "0") { Console.WriteLine("Goodbye!"); break; }
                 if (input == "1") { DisplayFlights(flights); }
                 if (input == "2") { DisplayBoardingGates(boardingGates); }
-
                 if (input == "3") { AssignBoardingGate(flights, boardingGates); }
                 if (input == "4") { CreateNewFlight(flights, airlines); }
-
                 if (input == "5") { DisplayAirlineFlights(airlines,flights); }
                 if (input == "6") { ModifyFlightDetails(airlines,flights); }
 

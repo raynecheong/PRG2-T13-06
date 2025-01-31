@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PRG2_T13_06
 {
-    internal abstract class Flight
+    internal abstract class Flight 
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
