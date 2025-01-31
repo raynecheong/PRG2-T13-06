@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PRG2_T13_06
 {
-    internal abstract class Flight 
+    internal abstract class Flight : IComparable<Flight>
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
@@ -35,6 +35,11 @@ namespace PRG2_T13_06
         public override string ToString()
         {
             return $"Flight Number{FlightNumber}, Origin: {Origin}, Destination: {Destination}, Date and Time: {ExpectedTime}, Status: {Status}";
+        }
+
+        public int CompareTo(Flight other)
+        {
+            return this.ExpectedTime.CompareTo(other.ExpectedTime);
         }
     }
 }
