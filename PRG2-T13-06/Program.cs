@@ -504,6 +504,21 @@ namespace PRG2_T13_06
             DisplayFlights(flights);
         }
 
+        static void DisplayFlightSchedule(Dictionary<string, Flight> flights)
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Flight Schedule for Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine($"{"Flight Number",-15} {"Airline Name",-20} {"Origin",-20} {"Destination",-20} {"Expected Departure/Arrival Time",-30} {"Status",-15} {"Boarding Gate",-15}");
+
+            List<Flight> flightList = flights.Values.ToList();
+            flightList.Sort();
+
+            foreach (var flight in flightList)
+            {
+                Console.WriteLine($"{flight.FlightNumber,-15} {terminal.GetAirlineFromFlight(flight).Name,-20} {flight.Origin,-20} {flight.Destination,-20} {flight.ExpectedTime.ToString("dd/MM/yyyy h:mm tt"),-30} {flight.Status,-15} {boardingGate,-15}");
+            }
+        }
 
         static void Main(string[] args)
         {
